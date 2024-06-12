@@ -1,0 +1,41 @@
+---
+- hosts: ws
+  become: 1
+  gather_facts: 1
+  ignore_errors: 1
+  tasks:
+    - name: Package Install
+      yum:
+        name: "{{item}}"
+        state: present
+      loop:
+        - lsof 
+        - wget 
+        - passwd 
+        - docker 
+        - unzip 
+    - name: Start docker
+      service: 
+        name: docker
+        state: started
+        enabled: yes
+    - name: install Java
+      yum:
+        name: "{{item}}"
+        state: present
+      loop:
+        - java-11 
+    - name: Create a directory 
+      file:
+        path: -p /opt/qa/spg
+        state: directory
+      register: directory_output
+    - name: create index file
+      file:
+        path: -p /opt/qa/spg/spg.log
+        state: touch
+    - name: Read data
+      debug:
+        var: directory_output
+    
+         
