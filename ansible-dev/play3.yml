@@ -7,4 +7,4 @@
      - name: Package Install
        yum:
           name: ["wget", "finger"]
-          state: present  
+          state: present

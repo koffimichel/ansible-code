@@ -26,4 +26,3 @@
     - name: Read data
       debug:
         var: server_uptime.stdout[:19]
-    
